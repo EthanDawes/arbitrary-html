@@ -20,9 +20,17 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
   if (event.request.mode === 'navigate') {
-    event.respondWith(
-      new Response((url.hash === '') ? 'Insert the HTML after "https://arbitrary-html.glitch.me/#"' : decodeURI(url.hash.substring(1)), {headers: {'content-type': 'text/html'}}
-    ));
+    if (url.hash !== '')
+      event.respondWith(
+        new Response(decodeURI(url.hash.substring(1)), {headers: {'content-type': 'text/html'}}
+      ));
+    else {
+      const request = event.request;
+
+      const staleWhileRevalidate = new workbox.strategies.StaleWhileRevalidate();
+      event.respondWith(staleWhileRevalidate.handle({event, request}));
+    }
+      
   }
 });
 
@@ -30,10 +38,10 @@ self.addEventListener('fetch', (event) => {
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
 
-self.addEventListener('install', function(event) {
+/*self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(workbox.core.cacheNames.runtime).then(function(cache) {
       return cache.addAll(staticResources);
     })
   );
-});
+});*/
