@@ -17,9 +17,17 @@ const {strategies} = workbox;
 
 self.addEventListener('fetch', (event) => {
   const request = event.request;
+  console.log("URL", event)
   
-  const staleWhileRevalidate = new workbox.strategies.StaleWhileRevalidate();
-  event.respondWith(staleWhileRevalidate.handle({event, request}));
+  if (event.request.mode === 'navigate') {
+    event.respondWith(async function() {
+      
+
+      return new Response("Test", {
+        headers: {'content-type': 'text/html'},
+      });
+    }());
+  }
 });
 
 // This immediately deploys the service worker w/o requiring a refresh
