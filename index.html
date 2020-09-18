@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Loading...</title>
+    <title>Arbitrary HTML</title>
     
     <script>
 // redirect to secure connection
-//location.protocol === 'http:' && (location.protocol = 'https:');
-
+location.protocol === 'http:' && (location.protocol = 'https:');
+      
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -23,7 +23,16 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+      
+function textChange(target) {
+  const a = document.querySelector('a');
+  a.href = a.innerText = target.innerText;
+}
     </script>
   </head>
-  <body>Loading...</body>
+  <body>
+    Insert the HTML after "https://arbitrary-html.glitch.me/#"<br />
+    Generated Link: <a href="#">URL</a><br />
+    <p><textarea placeholder="HTML code" style="width: 100%; height: 500px" oninput="textChange(this)"></textarea></p>
+  </body>
 </html>
