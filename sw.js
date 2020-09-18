@@ -1,4 +1,5 @@
 // Adapted from https://glitch.com/edit/#!/workbox-strategies
+// Adapted from https://philipwalton.com/articles/smaller-html-payloads-with-service-workers/
 // Resource https://developers.google.com/web/tools/workbox/modules/workbox-strategies
 // Resource https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
@@ -17,7 +18,7 @@ self.addEventListener('fetch', (event) => {
   
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      new Response((url.hash == '') ? 'Insert the HTML after "https://arbitrary-html.glitch.me/#"' : decodeURI(url.hash.substring(1)), {headers: {'content-type': 'text/html'}}
+      new Response((url.hash === '') ? 'Insert the HTML after "https://arbitrary-html.glitch.me/#"' : decodeURI(url.hash.substring(1)), {headers: {'content-type': 'text/html'}}
     ));
   }
 });
