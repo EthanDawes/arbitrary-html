@@ -26,13 +26,13 @@ if ('serviceWorker' in navigator) {
       
 function textChange(target) {
   const a = document.querySelector('a');
-  a.href = a.innerText = target.innerText;
+  a.href = a.innerText = location.origin +'/#'+ encodeURI(target.value);
 }
     </script>
   </head>
-  <body>
-    Insert the HTML after "https://arbitrary-html.glitch.me/#"<br />
-    Generated Link: <a href="#">URL</a><br />
+  <body style="overflow-wrap: anywhere;">
+    Insert the HTML after "https://arbitrary-html.glitch.me/#"
     <p><textarea placeholder="HTML code" style="width: 100%; height: 500px" oninput="textChange(this)"></textarea></p>
+    Generated Link: <a href="#">URL</a>
   </body>
 </html>
