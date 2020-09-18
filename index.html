@@ -37,6 +37,9 @@ function textChange(target) {
   a.href = location.origin +'/#'+ encodeURI(target.value);
   iframe.srcdoc = target.value;
 }
+
+document.onload = () =>
+  console.log("YEET")
     </script>
   </head>
   <body style="overflow-wrap: anywhere;">
