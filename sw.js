@@ -16,17 +16,12 @@ workbox.setConfig({
 const {strategies} = workbox;
 
 self.addEventListener('fetch', (event) => {
-  const request = event.request;
-  console.log("URL", event)
+  const url = new URL(event.request.url);
   
   if (event.request.mode === 'navigate') {
-    event.respondWith(async function() {
-      
-
-      return new Response("Test", {
+    event.respondWith(new Response(decodeURI(url.pathname.substring(1)), {
         headers: {'content-type': 'text/html'},
-      });
-    }());
+      }));
   }
 });
 
