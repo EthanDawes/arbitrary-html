@@ -17,7 +17,7 @@ self.addEventListener('fetch', (event) => {
   
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      new Response(decodeURI(url.pathname.substring(1)), {headers: {'content-type': 'text/html'}}
+      new Response(decodeURI(url.hash.substring(1)), {headers: {'content-type': 'text/html'}}
     ));
   }
 });
