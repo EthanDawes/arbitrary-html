@@ -36,14 +36,16 @@ function textChange(target) {
   const iframe = document.querySelector('iframe');
   a.href = location.origin +'/#'+ encodeURI(target.value);
   iframe.srcdoc = target.value;
+  history.replaceState(null, null, '?' + encodeURI(target.value));
 }
 
 window.onload = () =>
-  document.querySelector('textarea').value = location.search.substring(1);
+  document.querySelector('textarea').value = decodeURI(location.search.substring(1));
     </script>
   </head>
   <body style="overflow-wrap: anywhere;">
     Insert the HTML after "https://arbitrary-html.glitch.me/#"<br />
+    Anything after "?" will be displayed in this editor<br />
     <a href="#">Generated Link</a> (Start Typing Above...) <button>Copy to Clipboard</button>
     <p><textarea placeholder="HTML code" class="big" oninput="textChange(this)"></textarea></p>
     Preview:
