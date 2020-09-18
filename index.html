@@ -38,8 +38,8 @@ function textChange(target) {
   iframe.srcdoc = target.value;
 }
 
-document.onload = () =>
-  console.log("YEET")
+window.onload = () =>
+  document.querySelector('textarea').value = location.search.substring(1);
     </script>
   </head>
   <body style="overflow-wrap: anywhere;">
