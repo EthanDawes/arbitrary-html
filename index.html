@@ -7,6 +7,13 @@
 
     <title>Arbitrary HTML</title>
     
+    <style>
+.big {
+  width: 100%;
+  height: 500px;
+}
+    </style>
+    
     <script>
 // redirect to secure connection
 location.protocol === 'http:' && (location.protocol = 'https:');
@@ -26,14 +33,17 @@ if ('serviceWorker' in navigator) {
       
 function textChange(target) {
   const a = document.querySelector('a');
-  a.href = a.innerText = location.origin +'/#'+ encodeURI(target.value);
+  const iframe = document.querySelector('iframe');
+  a.href = a.innerText = iframe.src = location.origin +'/#'+ encodeURI(target.value);
+  iframe.src
 }
     </script>
   </head>
   <body style="overflow-wrap: anywhere;">
-    Insert the HTML after "https://arbitrary-html.glitch.me/#"
-    <p><textarea placeholder="HTML code" style="width: 100%; height: 500px" oninput="textChange(this)"></textarea></p>
-    
-    Generated Link: <a href="#">Start Typing Above...</a>
+    Insert the HTML after "https://arbitrary-html.glitch.me/#"<br />
+    <a href="#">Generated Link</a> (Start Typing Above...) <button>Copy to Clipboard</button>
+    <p><textarea placeholder="HTML code" class="big" oninput="textChange(this)"></textarea></p>
+    Preview:
+    <p><iframe src="about:blank" class="big"></iframe></p>
   </body>
 </html>
