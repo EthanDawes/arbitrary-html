@@ -34,14 +34,14 @@ if ('serviceWorker' in navigator) {
   });
 }
       
-function textChange(ev) {
-  const target = ev?.target || document.querySelector('textarea');
+function textChange(newText=null) {
+  const targetVal = newText || document.querySelector('textarea').value;
   const a = document.querySelector('a');
   const iframe = document.querySelector('iframe');
-  a.href = location.origin +'/#'+ encodeURI(target.value);
-  iframe.srcdoc = `<html contenteditable="true" onchange="window.parent.postMessage(document.documentElement.innerHTML, 'yes'">`+ target.value + '</html>';
-  location.hash = 'edit=' + encodeURI(target.value);
-  //history.replaceState(null, null, '?' + encodeURI(target.value));
+  a.href = location.origin +'/#'+ encodeURI(targetVal);
+  iframe.srcdoc = `<html contenteditable="true" oninput="window.parent.">`+ targetVal + '</html>';
+  location.hash = 'edit=' + encodeURI(targetVal);
+  //history.replaceState(null, null, '?' + encodeURI(targetVal));
 }
 
 // Adapted from https://stackoverflow.com/questions/11076975/how-to-insert-text-into-the-textarea-at-the-current-cursor-position
@@ -91,6 +91,10 @@ window.onload = () => {
   }
   document.body.style.display = 'unset';
 }
+
+window.addEventListener("message", ev => {
+  console.log(ev);
+}, false);
     </script>
   </head>
   <body style="overflow-wrap: anywhere; display: none;">
