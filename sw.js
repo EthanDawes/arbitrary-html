@@ -20,10 +20,17 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
   if (event.request.mode === 'navigate') {
-    if (url.hash !== '' && url.hash.split('=')[0] !== '#edit')
+    if (url.hash !== '' && url.hash.split('=')[0] !== '#edit') {
+      var code;
+      try {
+        code = decodeURI(url.hash.substring(1));
+      } catch {
+        code = 'Malformated URI. <a href="/">Click here to fix</a>';
+      }
       event.respondWith(
-        new Response(decodeURI(url.hash.substring(1)), {headers: {'content-type': 'text/html'}}
+        new Response(code, {headers: {'content-type': 'text/html'}}
       ));
+    }
     else {
       const request = event.request;
 
