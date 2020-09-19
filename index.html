@@ -37,7 +37,8 @@ function textChange() {
   const iframe = document.querySelector('iframe');
   a.href = location.origin +'/#'+ encodeURI(target.value);
   iframe.srcdoc = target.value;
-  history.replaceState(null, null, '?' + encodeURI(target.value));
+  location.hash = 'edit=' + encodeURI(target.value);
+  //history.replaceState(null, null, '?' + encodeURI(target.value));
 }
 
 // Adapted from https://stackoverflow.com/questions/11076975/how-to-insert-text-into-the-textarea-at-the-current-cursor-position
