@@ -45,8 +45,10 @@ function textChange(newText=null) {
   a.href = location.origin +'/#'+ encodeURI(targetVal);
   if (newText)  // If changed by iframe
     textarea.value = targetVal;
-  else
+  else {
     iframe.srcdoc = '<html contenteditable="true" oninput="window.parent.textChange(this.innerHTML)">'+ targetVal + '</html>';
+    iframe.contentWindow.isEditor = true;
+  }
   location.hash = 'edit=' + encodeURI(targetVal);
   // TODO: fix history states
   //history.replaceState(null, null, '?' + encodeURI(targetVal));
