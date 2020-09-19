@@ -35,11 +35,15 @@ if ('serviceWorker' in navigator) {
 }
       
 function textChange(newText=null) {
-  const targetVal = newText || document.querySelector('textarea').value;
+  const textarea = document.querySelector('textarea');
+  const targetVal = newText || textarea.value;
   const a = document.querySelector('a');
   const iframe = document.querySelector('iframe');
   a.href = location.origin +'/#'+ encodeURI(targetVal);
-  iframe.srcdoc = `<html contenteditable="true" oninput="window.parent.">`+ targetVal + '</html>';
+  if (newText)  // If changed by iframe
+    textarea.value = targetVal;
+  else
+    iframe.srcdoc = '<html contenteditable="true" oninput="window.parent.textChange(this.innerHTML)">'+ targetVal + '</html>';
   location.hash = 'edit=' + encodeURI(targetVal);
   //history.replaceState(null, null, '?' + encodeURI(targetVal));
 }
@@ -66,7 +70,7 @@ function insertAtCursor(myField, myValue) {
 
 function handlePaste(event) {
     let paste = (event.clipboardData || window.clipboardData).getData('text');
-    paste = decodeURI(paste);
+    paste = decodeURI(paste).replace('');
   
     insertAtCursor(event.target, paste);
     textChange();
@@ -105,7 +109,7 @@ window.addEventListener("message", ev => {
       <a href="#" target="_blank" title="Opens in new tab">Generated Link</a> <button onclick="copyTo(this)">Copy to Clipboard</button><br />
       <textarea placeholder="HTML code" class="big" oninput="textChange()" onpaste="handlePaste(event)"></textarea>
     </p>
-    Preview:
+    Preview: (editable!)
     <p><iframe src="about:blank" class="big"></iframe></p>
   </body>
 </html>
