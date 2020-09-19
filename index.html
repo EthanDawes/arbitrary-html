@@ -73,14 +73,14 @@ function handlePaste(event) {
 
 window.onload = () => {
   const textarea = document.querySelector('textarea');
-  textarea.value = decodeURI(location.search.substring(1));
+  textarea.value = decodeURI(location.hash.substring(6));
   textChange();
 }
     </script>
   </head>
   <body style="overflow-wrap: anywhere;">
-    Insert the HTML after "https://arbitrary-html.glitch.me/#"<br />
-    Anything after "?" will be displayed in this editor<br />
+    Insert the URI encoded HTML after "https://arbitrary-html.glitch.me/#"<br />
+    Anything after "#edit=" will be displayed in this editor<br />
     TIP: pasting encoded URIs will be automaticly decoded!
     <p>
       <a href="#">Generated Link</a><button>Copy to Clipboard</button><br />
