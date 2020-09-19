@@ -71,6 +71,12 @@ function handlePaste(event) {
     event.preventDefault();
 }
 
+function copyTo(target) {
+  navigator.clipboard.writeText(document.querySelector('a').href);
+  target.innerText = 'Copied!';
+  setTimeout(() => target.innerText = "Copy to Clipboard", 2000);
+}
+
 window.onload = () => {
   const textarea = document.querySelector('textarea');
   textarea.value = decodeURI(location.hash.substring(6));
@@ -83,7 +89,7 @@ window.onload = () => {
     Anything after "#edit=" will be displayed in this editor<br />
     TIP: pasting encoded URIs will be automaticly decoded!
     <p>
-      <a href="#">Generated Link</a><button>Copy to Clipboard</button><br />
+      <a href="#" target="_blank" title="Opens in new tab">Generated Link</a> <button onclick="copyTo(this)">Copy to Clipboard</button><br />
       <textarea placeholder="HTML code" class="big" oninput="textChange()" onpaste="handlePaste(event)"></textarea>
     </p>
     Preview:
