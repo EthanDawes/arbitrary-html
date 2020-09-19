@@ -86,7 +86,7 @@ function handlePaste(event) {
 }
 
 function copyTo(target) {
-  navigator.clipboard.writeText(document.querySelector('a').href);
+  navigator.clipboard.writeText(document.querySelector('a#gen').href);
   target.innerText = 'Copied!';
   setTimeout(() => target.innerText = "Copy to Clipboard", 2000);
 }
@@ -99,7 +99,7 @@ window.onload = () => {
     document.title = "Edit | " + document.title;
     textChange();
   } else {
-    document.write("" + decodeURI(location.hash.substring(1)));
+    document.write(document.head.outerHTML + decodeURI(location.hash.substring(1)));
   }
   document.body.style.display = 'unset';
 }
@@ -108,7 +108,7 @@ window.onload = () => {
   <body style="overflow-wrap: anywhere; display: none;">
     Insert the URI encoded HTML after "https://arbitrary-html.glitch.me/#"<br />
     Anything after "#edit=" will be displayed in this editor<br />
-    <a href="/presets.html" target="_blank" title="Opens in new tab">Start from a template?</a><br />
+    <a href="/presets.html#edit=" target="_blank" title="Opens in new tab">Start from a template?</a><br />
     TIP: pasting encoded URIs will be automaticly decoded!
     <p>
       <a href="#" target="_blank" title="Opens in new tab" id="gen">Generated Link</a> <button onclick="copyTo(this)">Copy to Clipboard</button><br />
