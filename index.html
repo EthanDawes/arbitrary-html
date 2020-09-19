@@ -48,6 +48,7 @@ function textChange(newText=null) {
   else
     iframe.srcdoc = '<html contenteditable="true" oninput="window.parent.textChange(this.innerHTML)">'+ targetVal + '</html>';
   location.hash = 'edit=' + encodeURI(targetVal);
+  // TODO: fix history states
   //history.replaceState(null, null, '?' + encodeURI(targetVal));
 }
 
