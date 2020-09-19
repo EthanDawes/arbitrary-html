@@ -37,7 +37,7 @@ if ('serviceWorker' in navigator) {
 function textChange(newText=null) {
   const textarea = document.querySelector('textarea');
   const targetVal = newText || textarea.value;
-  const a = document.querySelector('a');
+  const a = document.querySelector('a#gen');
   const iframe = document.querySelector('iframe');
   a.href = location.origin +'/#'+ encodeURI(targetVal);
   if (newText)  // If changed by iframe
@@ -106,9 +106,10 @@ window.addEventListener("message", ev => {
   <body style="overflow-wrap: anywhere; display: none;">
     Insert the URI encoded HTML after "https://arbitrary-html.glitch.me/#"<br />
     Anything after "#edit=" will be displayed in this editor<br />
+    <a href="/presets.html" target="_blank" title="Opens in new tab">Start from a template?</a><br />
     TIP: pasting encoded URIs will be automaticly decoded!
     <p>
-      <a href="#" target="_blank" title="Opens in new tab">Generated Link</a> <button onclick="copyTo(this)">Copy to Clipboard</button><br />
+      <a href="#" target="_blank" title="Opens in new tab" id="gen">Generated Link</a> <button onclick="copyTo(this)">Copy to Clipboard</button><br />
       <textarea placeholder="HTML code" class="big" oninput="textChange()" onpaste="handlePaste(event)"></textarea>
     </p>
     Preview: (editable!)
