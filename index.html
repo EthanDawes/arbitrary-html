@@ -39,6 +39,19 @@ function textChange(target) {
   history.replaceState(null, null, '?' + encodeURI(target.value));
 }
 
+// Adapted from https://stackoverflow.com/questions/55774733/how-to-modify-copied-text-before-pasting-using-javascript
+function handlePaste(event) {
+    let paste = (event.clipboardData || window.clipboardData).getData('text');
+    paste = decodeURI(paste);
+ 
+    const selection = window.getSelection();
+    if (!selection.rangeCount) return false;
+    selection.deleteFromDocument();
+    selection.getRangeAt(0).insertNode(document.createTextNode(paste));
+
+    event.preventDefault();
+}
+
 window.onload = () => {
   const textarea = document.querySelector('textarea');
   textarea.value = decodeURI(location.search.substring(1));
@@ -50,7 +63,7 @@ window.onload = () => {
     Insert the HTML after "https://arbitrary-html.glitch.me/#"<br />
     Anything after "?" will be displayed in this editor<br />
     <a href="#">Generated Link</a> (Start Typing Above...) <button>Copy to Clipboard</button>
-    <p><textarea placeholder="HTML code" class="big" oninput="textChange(this)" onpaste="console.log('PASTE!', this.value, event); this.value = decodeURI(this.value)"></textarea></p>
+    <p><textarea placeholder="HTML code" class="big" oninput="textChange(this)" onpaste="handlePaste(event)"></textarea></p>
     Preview:
     <p><iframe src="about:blank" class="big"></iframe></p>
   </body>
