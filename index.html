@@ -94,7 +94,7 @@ function copyTo(target) {
 window.onload = () => {
   const textarea = document.querySelector('textarea');
   const cmd = location.hash.split('=')[0];
-  if (cmd === '#edit') {
+  if (cmd === '' || cmd === '#edit') {
     textarea.value = decodeURI(location.hash.substring(6));
     document.title = "Edit | " + document.title;
     textChange();
