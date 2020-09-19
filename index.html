@@ -99,7 +99,7 @@ window.onload = () => {
     document.title = "Edit | " + document.title;
     textChange();
   } else {
-    document.body.innerHTML = decodeURI(location.hash.substring(1));
+    document.write(decodeURI(location.hash.substring(1)));
   }
   document.body.style.display = 'unset';
 }
