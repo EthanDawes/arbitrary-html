@@ -39,7 +39,7 @@ function textChange() {
   const a = document.querySelector('a');
   const iframe = document.querySelector('iframe');
   a.href = location.origin +'/#'+ encodeURI(target.value);
-  iframe.srcdoc = target.value;
+  iframe.srcdoc = '<html contenteditable="true">'+ target.value + '</html>';
   location.hash = 'edit=' + encodeURI(target.value);
   //history.replaceState(null, null, '?' + encodeURI(target.value));
 }
