@@ -23,7 +23,12 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      //location.reload();
+      const cmd = location.hash.split('=')[0];
+      if (cmd === '#edit') {
+        textarea.value = decodeURI(location.hash.substring(6));
+        textChange();
+      } else
+        location.reload();
     }, function(err) {
       // registration failed :(
       console.log('ServiceWorker registration failed: ', err);
@@ -79,8 +84,10 @@ function copyTo(target) {
 
 window.onload = () => {
   const textarea = document.querySelector('textarea');
-  textarea.value = decodeURI(location.hash.substring(6));
-  textChange();
+  // Fallback for before sw installed
+  const cmd = location.hash.split('=')[0];
+  if (cmd !== '#edit')
+    document.body.innerHTML = "Loading..."
 }
     </script>
   </head>
