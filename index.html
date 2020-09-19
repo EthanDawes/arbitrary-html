@@ -49,9 +49,8 @@ function textChange(newText=null) {
     iframe.srcdoc = '<html contenteditable="true" oninput="window.parent.textChange(this.innerHTML)">'+ targetVal + '</html>';
     iframe.contentWindow.isEditor = true;
   }
-  location.hash = 'edit=' + encodeURI(targetVal);
-  // TODO: fix history states
-  //history.replaceState(null, null, '?' + encodeURI(targetVal));
+  //location.hash = 'edit=' + encodeURI(targetVal);
+  history.replaceState(null, null, '#edit=' + encodeURI(targetVal));
 }
 
 // Adapted from https://stackoverflow.com/questions/11076975/how-to-insert-text-into-the-textarea-at-the-current-cursor-position
