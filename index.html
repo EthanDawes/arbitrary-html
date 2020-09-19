@@ -34,12 +34,12 @@ if ('serviceWorker' in navigator) {
   });
 }
       
-function textChange() {
-  const target = document.querySelector('textarea');
+function textChange(ev) {
+  const target = ev?.target || document.querySelector('textarea');
   const a = document.querySelector('a');
   const iframe = document.querySelector('iframe');
   a.href = location.origin +'/#'+ encodeURI(target.value);
-  iframe.srcdoc = '<html contenteditable="true">'+ target.value + '</html>';
+  iframe.srcdoc = `<html contenteditable="true" onchange="window.parent.postMessage(document.documentElement.innerHTML, 'yes'">`+ target.value + '</html>';
   location.hash = 'edit=' + encodeURI(target.value);
   //history.replaceState(null, null, '?' + encodeURI(target.value));
 }
