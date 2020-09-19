@@ -23,12 +23,6 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      const cmd = location.hash.split('=')[0];
-      if (cmd === '#edit') {
-        textarea.value = decodeURI(location.hash.substring(6));
-        textChange();
-      } else
-        location.reload();
     }, function(err) {
       // registration failed :(
       console.log('ServiceWorker registration failed: ', err);
@@ -84,14 +78,18 @@ function copyTo(target) {
 
 window.onload = () => {
   const textarea = document.querySelector('textarea');
-  // Fallback for before sw installed
   const cmd = location.hash.split('=')[0];
-  if (cmd !== '#edit')
-    document.body.innerHTML = "Loading..."
+  if (cmd === '#edit') {
+    textarea.value = decodeURI(location.hash.substring(6));
+    textChange();
+  } else {
+    document.body.innerHTML = decodeURI(location.hash.substring(1));
+  }
+  document.body.style.display = 'unset';
 }
     </script>
   </head>
-  <body style="overflow-wrap: anywhere;">
+  <body style="overflow-wrap: anywhere; display: none;">
     Insert the URI encoded HTML after "https://arbitrary-html.glitch.me/#"<br />
     Anything after "#edit=" will be displayed in this editor<br />
     TIP: pasting encoded URIs will be automaticly decoded!
