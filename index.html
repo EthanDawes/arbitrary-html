@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Edit | Arbitrary HTML</title>
+    <title>Arbitrary HTML</title>
     
     <link rel="icon"
       href="https://cdn.glitch.com/3b5435b3-c38c-479b-a5a7-d254c2e23cc0%2Fchaos.png?v=1600527757494">
@@ -96,6 +96,7 @@ window.onload = () => {
   const cmd = location.hash.split('=')[0];
   if (cmd === '#edit') {
     textarea.value = decodeURI(location.hash.substring(6));
+    document.title = "Edit | " + document.title;
     textChange();
   } else {
     document.body.innerHTML = decodeURI(location.hash.substring(1));

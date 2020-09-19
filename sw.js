@@ -20,7 +20,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
   if (event.request.mode === 'navigate') {
-    if (url.hash !== '' && url.hash.split('=')[0] !== '#edit') {
+    /*if (url.hash !== '' && url.hash.split('=')[0] !== '#edit') {
       var code;
       try {
         code = decodeURI(url.hash.substring(1));
@@ -31,12 +31,11 @@ self.addEventListener('fetch', (event) => {
         new Response(code, {headers: {'content-type': 'text/html'}}
       ));
     }
-    else {
-      const request = event.request;
+    else {*/
+    const request = event.request;
 
-      const staleWhileRevalidate = new workbox.strategies.StaleWhileRevalidate();
-      event.respondWith(staleWhileRevalidate.handle({event, request}));
-    }
+    const staleWhileRevalidate = new workbox.strategies.StaleWhileRevalidate();
+    event.respondWith(staleWhileRevalidate.handle({event, request}));
       
   }
 });
