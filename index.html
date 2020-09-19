@@ -69,13 +69,15 @@ function insertAtCursor(myField, myValue) {
 }
 
 function handlePaste(event) {
-    let paste = (event.clipboardData || window.clipboardData).getData('text');
-    paste = decodeURI(paste).replace('');
-  
-    insertAtCursor(event.target, paste);
-    textChange();
+  let paste = (event.clipboardData || window.clipboardData).getData('text');
+  // Remove site URL prefix
+  const regex = new RegExp('^' + location.origin + '/?#?(edit=)?');
+  paste = decodeURI(paste).replace(regex, '');
 
-    event.preventDefault();
+  insertAtCursor(event.target, paste);
+  textChange();
+
+  event.preventDefault();
 }
 
 function copyTo(target) {
