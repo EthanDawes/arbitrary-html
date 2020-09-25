@@ -86,9 +86,9 @@ function handlePaste(event) {
 }
 
 function copyTo(target) {
-  navigator.clipboard.writeText(document.querySelector('a#gen').href);
+  navigator.clipboard.writeText('<iframe style="width: 100%; height: 100%;" src="' + document.querySelector('a#gen').href + '"></iframe>');
   target.innerText = 'Copied!';
-  setTimeout(() => target.innerText = "Copy to Clipboard", 2000);
+  setTimeout(() => target.innerText = "Copy iframe", 2000);
 }
 
 window.onload = () => {
@@ -101,7 +101,7 @@ window.onload = () => {
   } else {
     document.write(document.head.outerHTML + decodeURI(location.hash.substring(1)));
   }
-  document.body.style.display = 'unset';
+  document.body.style.display = 'block';
 }
     </script>
   </head>
@@ -111,7 +111,7 @@ window.onload = () => {
     <a href="/presets.html#edit=" target="_blank" title="Opens in new tab">Start from a template?</a><br />
     TIP: pasting encoded URIs will be automaticly decoded!
     <p>
-      <a href="#" target="_blank" title="Opens in new tab" id="gen">Generated Link</a> <button onclick="copyTo(this)">Copy to Clipboard</button><br />
+      <a href="#" target="_blank" title="Opens in new tab" id="gen">Generated Link</a> <button onclick="copyTo(this)">Copy iframe</button><br />
       <textarea placeholder="HTML code" class="big" oninput="textChange()" onpaste="handlePaste(event)"></textarea>
     </p>
     Preview: (editable!)<br />
