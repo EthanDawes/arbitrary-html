@@ -86,7 +86,7 @@ function handlePaste(event) {
 }
 
 function copyTo(target) {
-  navigator.clipboard.writeText('<iframe style="width: 100%; height: 100%;" src="' + document.querySelector('a#gen').href + '"></iframe>');
+  navigator.clipboard.writeText('<iframe style="width: 100%; height: 300px;" src="' + document.querySelector('a#gen').href + '"></iframe>');
   target.innerText = 'Copied!';
   setTimeout(() => target.innerText = "Copy iframe", 2000);
 }
