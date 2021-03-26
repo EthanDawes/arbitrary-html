@@ -48,11 +48,12 @@ function textChange(newText=null) {
   const targetVal = newText || textarea.value;
   const a = document.querySelector('a#gen');
   const iframe = document.querySelector('iframe');
+  const iframeEditable = document.getElementById('editable').checked;
   a.href = location.origin +'/#'+ encodeURI(targetVal);
-  if (newText)  // If changed by iframe
+  if (newText && iframeEditable)  // If changed by iframe
     textarea.value = targetVal;
   else {
-    iframe.srcdoc = '<html contenteditable="true" oninput="window.parent.textChange(this.innerHTML)">'+ targetVal + '</html>';
+    iframe.srcdoc = `<html contenteditable="${iframeEditable}" oninput="window.parent.textChange(this.innerHTML)">`+ targetVal + '</html>';
     iframe.contentWindow.isEditor = true;
   }
   //location.hash = 'edit=' + encodeURI(targetVal);
@@ -120,7 +121,7 @@ window.onload = () => {
       <a href="#" target="_blank" title="Opens in new tab" id="gen">Generated Link</a> <button onclick="copyTo(this)">Copy iframe</button><br />
       <textarea placeholder="HTML code" class="big" oninput="textChange()" onpaste="handlePaste(event)"></textarea>
     </p>
-    Preview: (<input type="checkbox" checked />editable!)<br />
+    Preview: (<input id="editable" type="checkbox" onclick="textChange()" checked />editable!)<br />
     TIP: use ctr/command+ B/I/U to apply bold, italics, and underline respectively
     <p><iframe src="about:blank" class="big"></iframe></p>
   </body>
