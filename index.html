@@ -104,7 +104,10 @@ window.onload = () => {
   if (cmd === '' || cmd === '#edit') {
     textarea.value = decodeURI(location.hash.substring(6));
     document.title = "Edit | " + document.title;
-    textChange();
+    if (cmd === '')
+      textChange();
+    else
+      textChange();
   } else {
     document.write(document.head.outerHTML + decodeURI(location.hash.substring(1)));
   }
