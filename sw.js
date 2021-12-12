@@ -5,7 +5,7 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 var workbox;  // needed to prevent "workbox is undefined" glitch.com warning
 const staticResources = [
-  
+  "https://cdn.glitch.com/3b5435b3-c38c-479b-a5a7-d254c2e23cc0%2Fchaos.png?v=1600527757494"
 ];
 
 
@@ -19,8 +19,8 @@ const {strategies} = workbox;
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   
-  if (event.request.mode === 'navigate') {
-    /*if (url.hash !== '' && url.hash.split('=')[0] !== '#edit') {
+  /*if (event.request.mode === 'navigate') {
+    if (url.hash !== '' && url.hash.split('=')[0] !== '#edit') {
       var code;
       try {
         code = decodeURI(url.hash.substring(1));
@@ -32,12 +32,11 @@ self.addEventListener('fetch', (event) => {
       ));
     }
     else {*/
-    const request = event.request;
+  
+  const request = event.request;
 
-    const staleWhileRevalidate = new workbox.strategies.StaleWhileRevalidate();
-    event.respondWith(staleWhileRevalidate.handle({event, request}));
-      
-  }
+  const staleWhileRevalidate = new workbox.strategies.StaleWhileRevalidate();
+  event.respondWith(staleWhileRevalidate.handle({event, request}));
 });
 
 // This immediately deploys the service worker w/o requiring a refresh
