@@ -1,0 +1,5 @@
+- Make UI better
+- Fix bug where pasting resets cursor location
+- Proper syntax hilighting/indenting
+- Rewind View (look at history entries)
+- Phishing mitigation (maybe a mandetory "view source" button?)
