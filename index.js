@@ -3,7 +3,7 @@ location.protocol === 'http:' && (location.protocol = 'https:');
       
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);
     }, function(err) {
@@ -19,7 +19,7 @@ function textChange(newText=null) {
   const a = document.querySelector('a#gen');
   const iframe = document.querySelector('iframe');
   const iframeEditable = document.getElementById('editable').checked;
-  a.href = location.origin +'/#'+ encodeURI(targetVal);
+  a.href = '#'+ encodeURI(targetVal);
   if (newText && iframeEditable)  // If changed by iframe
     textarea.value = targetVal;
   else {
