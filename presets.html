@@ -50,6 +50,6 @@ const main = document.getElementById('main');
 let dir = location.pathname;
 dir = dir.substring(0, dir.lastIndexOf('/'));
 for (let template of templates) {
-  main.innerHTML += `<a href="${template}"><iframe src="${location.origin + dir + template}" disabled></iframe></a>`;
+  main.innerHTML += `<a href="${template}"><iframe src="${location.origin + dir + template.replace(/^#edit=/, '#')}" disabled></iframe></a>`;
 }
 </script>
