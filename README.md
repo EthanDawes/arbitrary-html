@@ -1,3 +1,5 @@
+<img align="left" src="chaos.png" style="width: 4em">
+
 # Arbitrary-HTML
 
 🌐 [View Online!](https://funblaster22.github.io/arbitrary-html/#edit=)
