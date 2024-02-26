@@ -49,7 +49,8 @@ const main = document.getElementById('main');
 
 let dir = location.pathname;
 dir = dir.substring(0, dir.lastIndexOf('/'));
+const basePath = location.origin + dir;
 for (let template of templates) {
-  main.innerHTML += `<a href="${template}"><iframe src="${location.origin + dir + template.replace(/^#edit=/, '#')}" disabled></iframe></a>`;
+  main.innerHTML += `<a href="${basePath + template}"><iframe src="${basePath + template.replace(/^#edit=/, '#')}" disabled></iframe></a>`;
 }
 </script>
