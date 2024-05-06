@@ -12,7 +12,19 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-      
+
+function onIframeClick(ev) {
+  const textarea = document.querySelector('textarea');
+  const iframeEditable = document.getElementById('editable').checked;
+  if (!iframeEditable) return;
+  if (ev.target.nodeName === "IMG") {
+    const newSrc = prompt("New image source:");
+    if (!newSrc) return;
+    ev.target.src = newSrc;
+  }
+  textarea.value = ev.currentTarget.innerHTML;  // originalTarget = root iframe HTML element
+}
+
 function textChange(newText=null) {
   const textarea = document.querySelector('textarea');
   const targetVal = newText || textarea.value;
@@ -23,7 +35,7 @@ function textChange(newText=null) {
   if (newText && iframeEditable)  // If changed by iframe
     textarea.value = targetVal;
   else {
-    iframe.srcdoc = `<html contenteditable="${iframeEditable}" oninput="window.parent.textChange(this.innerHTML)">`+ targetVal + '</html>';
+    iframe.srcdoc = `<html contenteditable="${iframeEditable}" onclick="window.parent.onIframeClick(event)" oninput="window.parent.textChange(this.innerHTML)">`+ targetVal + '</html>';
     iframe.contentWindow.isEditor = true;
   }
   //location.hash = 'edit=' + encodeURI(targetVal);
