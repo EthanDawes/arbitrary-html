@@ -62,3 +62,8 @@ Render text with an animated wavy effect
 Write a message on the terminal, complete with a few working commands!
 
 [![](.github/demos/terminal.png)](https://funblaster22.github.io/arbitrary-html/presets.html?redir=10)
+
+### Calendar
+Create & print full-page calendars
+
+[![](.github/demos/calendar.png)](https://funblaster22.github.io/arbitrary-html/presets.html?redir=11)
