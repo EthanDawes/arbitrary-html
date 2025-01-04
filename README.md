@@ -67,3 +67,8 @@ Write a message on the terminal, complete with a few working commands!
 Create & print full-page calendars
 
 [![](.github/demos/calendar.png)](https://funblaster22.github.io/arbitrary-html/presets.html?redir=11)
+
+### Schedule
+Create & print full-page schedules
+
+[![](.github/demos/schedule.png)](https://funblaster22.github.io/arbitrary-html/presets.html?redir=12)
