@@ -76,4 +76,9 @@ Create & print full-page schedules
 ### Week Calendar
 Create & print full-page calendars
 
-[![](.github/demos/week-cal.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=12)
+[![](.github/demos/week-cal.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=13)
+
+### Chart.js
+Prototype and quickly view interactive chart.js configurations
+
+[![](.github/demos/chartjs.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=14)
