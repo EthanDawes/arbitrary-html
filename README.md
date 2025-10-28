@@ -82,3 +82,8 @@ Create & print full-page calendars
 Prototype and quickly view interactive chart.js configurations
 
 [![](.github/demos/chartjs.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=14)
+
+### Flashcards
+Create custom printable double-sided flashcards
+
+[![](.github/demos/flashcards.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=15)
