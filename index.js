@@ -1,6 +1,6 @@
 // redirect to secure connection
-location.protocol === 'http:' && (location.protocol = 'https:');
-      
+location.protocol === 'http:' && location.hostname != "localhost" && (location.protocol = 'https:');
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('sw.js').then(function(registration) {
