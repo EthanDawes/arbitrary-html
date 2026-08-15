@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendar</title>
+  <style>
+    /* Make the table span the whole page */
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    table {
+      width: 100vw;
+      height: 100vh;
+      border-collapse: collapse;
+    }
+
+    th, td:not(.month) {
+      border: 1px solid black;
+      padding: 5px;
+      width: calc(100vw / 7);
+    }
+
+    th {
+      height: 5vh; /* Header takes about 5% of vertical space */
+      text-align: right;
+    }
+
+    td {
+      vertical-align: top;
+    }
+
+    .month {
+        font-weight: normal;
+        font-size: 6pt;
+        margin: auto;
+        text-align: center;
+        height: 8px
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const isIframed = !!window.frameElement;
+    const now = new Date();
+
+    // Prompt user for year and month
+    let year = isIframed ? now.getFullYear() : (parseInt(prompt("Enter the year:")) || now.getFullYear());
+    let month = isIframed ? now.getMonth() + 1 : (parseInt(prompt("Enter the month (1-12):")) || now.getMonth() + 1);
+
+    // Function to generate the calendar
+    function generateCalendar(year, month) {
+      // Do not clear so can make multi-month printouts
+      const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+      const table = document.createElement('table');
+      const headerRow = document.createElement('tr');
+
+      // Add month label
+      const monthLabel = document.createElement("td");
+      monthLabel.className = "month"
+      monthLabel.colSpan = "7";
+      monthLabel.innerText = new Date(year, month - 1, 1).toLocaleString(undefined, { month: "long", year: "numeric" });
+      table.appendChild(monthLabel);
+
+      // Create day of week headers
+      daysOfWeek.forEach(day => {
+        const th = document.createElement('th');
+        th.innerText = day;
+        headerRow.appendChild(th);
+      });
+
+      table.appendChild(headerRow);
+
+      // Get the first day of the month and the number of days in the month
+      const firstDay = new Date(year, month - 1, 0).getDay();  // First day of the month (0 = Sunday)
+      const daysInMonth = new Date(year, month, 0).getDate();  // Number of days in the month
+
+      let currentDay = 1;
+      let row = document.createElement('tr');
+
+      // Fill the empty cells before the first day of the month
+      for (let i = 0; i < firstDay; i++) {
+        const emptyCell = document.createElement('td');
+        row.appendChild(emptyCell);
+      }
+
+      // Generate all days of the month
+      for (let i = firstDay; i < 7; i++) {
+        const cell = document.createElement('td');
+        cell.innerText = currentDay++;
+        row.appendChild(cell);
+      }
+
+      table.appendChild(row);
+
+      // Continue adding rows for the remaining days of the month
+      while (currentDay <= daysInMonth) {
+        row = document.createElement('tr');
+        for (let i = 0; i < 7 && currentDay <= daysInMonth; i++) {
+          const cell = document.createElement('td');
+          cell.innerText = currentDay++;
+          row.appendChild(cell);
+        }
+        table.appendChild(row);
+      }
+
+      // Append the table to the body
+      document.body.appendChild(table);
+    }
+
+    // Generate the calendar based on user input
+    generateCalendar(year, month);
+
+    document.onclick = () => {
+      if (month === 11) year++;
+      month = (month + 1) % 12;
+      generateCalendar(year, month);
+    }
+  </script>
+</body>
+</html>

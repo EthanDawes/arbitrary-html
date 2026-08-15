@@ -38,11 +38,6 @@ Customize several answer choices that highlight if wrong/correct
 
 [![](.github/demos/quiz.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=5)
 
-### Canvas
-If your school uses Canvas, this may confuse a few people
-
-[![](.github/demos/canvas.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=6)
-
 ### Notes
 If you have something you want to remember but it's not important enough for a Google doc, write it here. Will persist over browser restarts because your content is in the url.
 

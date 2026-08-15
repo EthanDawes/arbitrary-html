@@ -1,0 +1,37 @@
+<head><style>
+ul {
+  list-style-type: none;
+  margin-inline-start: -1em;
+}
+
+label {
+padding: 2px;
+}
+
+input[type="radio"]:checked+label {
+  background-color: red;
+}
+
+input[type="radio"]:checked+label::after {
+  content: " WRONG!";
+}
+
+input[type="radio"]:checked+label#correct {
+  background-color: green;
+}
+
+input[type="radio"]:checked+label#correct::after {
+  content: " CORRECT!";
+}
+</style></head><body>
+
+<h3>Select ONE</h3>
+
+<ul>
+<li><input type="radio" name="q" id="a"><label id="correct" for="a">Correct</label></li>
+<li><input type="radio" name="q" id="b"><label for="b">Wrong</label></li>
+<li><input type="radio" name="q" id="c"><label for="c">Wrong</label></li>
+<li><input type="radio" name="q" id="d"><label for="d">Wrong</label></li>
+<li><input type="radio" name="q" id="e"><label for="e">Wrong</label></li>
+</ul>
+</body>

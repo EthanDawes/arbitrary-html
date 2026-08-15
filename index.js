@@ -80,10 +80,14 @@ function copyTo(target) {
   setTimeout(() => target.innerText = "Copy iframe", 2000);
 }
 
-window.onload = () => {
+window.onload = async () => {
   const textarea = document.querySelector('textarea');
   const cmd = location.hash.split('=')[0];
-  if (cmd === '' || cmd === '#edit') {
+  if (cmd === '#editurl') {
+    textarea.value = await (await fetch(location.hash.substring(9))).text();
+    document.title = "Edit | " + document.title;
+    textChange();
+  } else if (cmd === '' || cmd === '#edit') {
     textarea.value = decodeURI(location.hash.substring(6));
     document.title = "Edit | " + document.title;
     textChange();

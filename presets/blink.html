@@ -1,0 +1,46 @@
+<head>
+<style>
+input[type=range] {
+  width: 100%;
+}
+</style>
+<script>
+function slider(self) {
+  self.setAttribute('value', self.value);
+  window.parent.textChange(document.documentElement.innerHTML)
+}
+</script>
+</head>
+<body>
+  <div id="dev" contenteditable="false">
+    <h1>Seizure Warning</h1>
+    Milliseconds on
+    <input type="range" min="0" max="1000" value="500" id="on" oninput="slider(this)">
+    Milliseconds off
+    <input type="range" min="0" max="1000" value="500" id="off" oninput="slider(this)">
+    <hr>
+  </div>
+  <div id="render" style="color: black;">What viewer sees...</div>
+
+
+<script>
+function show() {
+  render.style.color = "black";
+  setTimeout(hide, waitOn.value);
+}
+
+function hide() {
+  render.style.color = "transparent";
+  setTimeout(show, waitOff.value);
+}
+
+const dev = document.getElementById('dev');
+const waitOn = document.getElementById('on');
+const waitOff = document.getElementById('off');
+const render = document.getElementById('render');
+
+if (window.parent.location.hash.split('=')[0] !== '#edit')
+  dev.remove();
+
+hide();
+</script></body>

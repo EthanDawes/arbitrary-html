@@ -1,0 +1,41 @@
+<head>
+<style>
+#cursor {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid orange; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+
+height: 1em;
+  animation:
+    blink-caret .75s step-end infinite;
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange; }
+}
+</style>
+</head>
+<body>
+<button onclick="typeWriter();">Click to Show</button>
+  <div id="typewriter"></div><div id="cursor"></div>
+</body>
+<script>
+const html = `Check <code>script</code> element in HTML for <b>typewriting effect</b>`;
+const speed = 10;
+
+var i = 0;
+
+function typeWriter() {
+  if (i < html.length) {
+    document.getElementById("typewriter").innerHTML = html.substring(0, i+1);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+if (window.parent.location.pathname == "/presets.html")
+  typeWriter()
+</script>

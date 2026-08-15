@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Table Generator</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      padding-top: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      height: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+    }
+    th {
+      background-color: #f4f4f4;
+      vertical-align: top;
+    }
+    .label {
+      transform: translateY(-10px);
+      display: inline-block;
+    }
+    td {
+      width: 33%;
+      padding-right: 0;
+    }
+    tr {
+      height: calc(100% / 20); /* Ensure consistent height for all rows */
+    }
+
+.timediv {
+width: 20px;
+height: 100%;
+display: flex;
+flex-direction: column;
+float: right;
+}
+
+.timediv div {
+height: 100%;
+}
+
+.timediv :not(:first-child) {
+border-top: 1px solid #ccc;
+}
+  </style>
+</head>
+<body>
+  <script>
+    const isFramed = !!window.frameElement;
+    const generateTable = () => {
+      // Prompt for input times
+      const startTime = isFramed ? "7:00" : prompt("Enter start time (h:m, 24-hour format):");
+      const endTime = isFramed ? "19:00" : prompt("Enter end time (h:m, 24-hour format):");
+
+      // Convert time strings to minutes since midnight
+      const toMinutes = (time, floor) => {
+        const [hours, minutes] = time.split(":").map(Number);
+        return hours * 60 + Math[floor ? "floor" : "ceil"](minutes / 30) * 30;
+      };
+
+      const startMinutes = toMinutes(startTime, true);
+      let endMinutes = toMinutes(endTime, false);  // don't subtract 1 hr even though end time is exclusive b/c sometimes omits time (eg: 4-19)
+      if (endMinutes < startMinutes) endMinutes += 24 * 60  // Assume going into the next day
+      const duration = endMinutes - startMinutes;
+
+      // Generate time labels
+      const createTimeLabels = (start, duration) => {
+        const labels = [];
+        for (let i = 0; i <= duration; i += 30) {
+          const currentMinutes = start + i;
+          const hours = Math.floor(currentMinutes / 60) % 24;
+          const minutes = currentMinutes % 60;
+          if (minutes === 0) {
+            labels.push(`${hours % 12 || 12} ${hours >= 12 ? 'pm' : 'am'}`);
+          } else {
+            labels.push("");
+          }
+        }
+        return labels;
+      };
+
+      const continuousTimeLabels = createTimeLabels(startMinutes, duration);
+
+      // Split labels into three equal segments
+      const rowsNeeded = Math.ceil(continuousTimeLabels.length / 3);
+      const timeLabels = [
+        continuousTimeLabels.slice(0, rowsNeeded),
+        continuousTimeLabels.slice(rowsNeeded, 2 * rowsNeeded),
+        continuousTimeLabels.slice(2 * rowsNeeded),
+      ];
+
+      // Create the table
+      const table = document.createElement("table");
+      for (let rowIndex = 0; rowIndex < rowsNeeded; rowIndex++) {
+        const row = document.createElement("tr");
+        for (let col = 0; col < 6; col++) {
+          const cell = document.createElement(col % 2 === 0 ? "th" : "td");
+          const segmentIndex = Math.floor(col / 2);
+          if (col % 2 === 0 && timeLabels[segmentIndex][rowIndex]) {
+            cell.innerHTML = '<span class="label">' + timeLabels[segmentIndex][rowIndex] + '</span>';
+          } else if (col % 2 === 1) {
+            cell.innerHTML = "<div class=timediv><div></div><div></div><div></div></div>"
+          }
+          row.appendChild(cell);
+        }
+        table.appendChild(row);
+      }
+
+      document.body.appendChild(table);
+    };
+
+    generateTable();
+  </script>
+</body>
+</html>

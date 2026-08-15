@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Flashcards</title>
+<style>
+  @page { size: letter landscape; }
+  body { font-family: sans-serif; margin: 0; }
+  button {
+    display: block;
+    margin: 20px auto;
+    font-size: 18px;
+    padding: 8px 16px;
+  }
+  .section-title {
+    text-align: center;
+    font-size: 24px;
+    margin: 20px 0;
+  }
+  .page {
+    width: 11in; height: 8.5in;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    page-break-after: always;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 3in);
+    grid-template-rows: repeat(4, 2in);
+  }
+  .card {
+    width: 3in; height: 2in;
+    border: 1px solid #000;
+    display: flex; justify-content: center; align-items: center;
+    text-align: center; font-size: 22px;
+    position: relative; box-sizing: border-box;
+  }
+  .label {
+    position: absolute;
+    bottom: 0.1in; right: 0.15in;
+    font-size: 12px; color: #444;
+  }
+  @media print {
+    button, .section-title, small { display: none; }
+    body { margin: 0; }
+    .page { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+<button onclick="window.print()">Print All</button>
+<h1 class="section-title">Flashcards</h1>
+<div style="text-align: center;"><small>Ensure print double-sided and flip on short edge</small></div>
+<div id="cards"></div>
+
+<script>
+(async () => {
+  const isFramed = !!window.frameElement;
+  const category = isFramed ? "jokes" : (prompt("Enter category label (e.g., vocabulary, class, etc.):") || "");
+  const defaultCards = [
+    ["What do you call a pony with a cough?", "A little horse."]
+  ];
+  const data = isFramed ? defaultCards : JSON.parse(prompt('Provide your flashcards in the format [["term", "definition"]...]') || JSON.stringify(defaultCards));
+
+  const make = (text, label="", empty=false) => {
+    const c = document.createElement("div");
+    c.className = "card";
+    if (!empty) c.textContent = text;
+    if (label && !empty) {
+      const l = document.createElement("div");
+      l.className = "label";
+      l.textContent = label;
+      c.appendChild(l);
+    }
+    return c;
+  };
+
+  const chunk = (a, n) => a.reduce((r, _, i) => (i % n ? r : [...r, a.slice(i, i + n)]), []);
+  const padRow = row => {
+    while (row.length % 3 !== 0) row.push(make("", "", true));
+    return row;
+  };
+
+  const container = document.getElementById("cards");
+  const pairs = data.map(([front, back]) => ({ front, back, label: category }));
+  const fronts = pairs.map(p => make(p.front, p.label));
+  const backs = pairs.map(p => make(p.back));
+
+  const frontChunks = chunk(fronts, 12);
+  const backChunks = chunk(backs, 12);
+
+  frontChunks.forEach((group, i) => {
+    const makePage = cs => {
+      const p = document.createElement("div");
+      p.className = "page";
+      const g = document.createElement("div");
+      g.className = "grid";
+      // pad each row to 3 cards
+      Array.from({ length: 4 }, (_, r) => {
+        const row = cs.slice(r * 3, r * 3 + 3);
+        padRow(row).forEach(c => g.appendChild(c));
+      });
+      p.appendChild(g);
+      container.appendChild(p);
+    };
+    makePage(group);
+
+    // back page reversed by row for duplex alignment
+    const b12 = backChunks[i] || [];
+    const reversed = Array.from({ length: 4 }, (_, r) =>
+      padRow(b12.slice(r * 3, r * 3 + 3)).reverse()
+    ).flat();
+    makePage(reversed);
+  });
+})();
+</script>
+</body>
+</html>

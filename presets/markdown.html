@@ -1,0 +1,45 @@
+<head>
+<script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+
+<style>
+table {
+  background-color: black;
+}
+
+td, th {
+  background-color: white;
+}
+
+#src {
+  border: 1px solid black;
+  margin: 10px;
+  padding: 10px;
+}
+</style>
+
+</head>
+<body contenteditable="false">
+  <div id="dev">
+    <h1>Markdown Editor</h1>
+    <a href="https://en.wikipedia.org/wiki/Markdown" target="_blank">What is Markdown?</a><br>
+    Start writing below:
+    <div id="src" contenteditable="true"></div>
+    What viewer sees:
+    <hr>
+  </div>
+  <div id="render"></div>
+
+
+<script>
+const src = document.getElementById('src');
+const dev = document.getElementById('dev');
+const render = document.getElementById('render');
+const converter = new showdown.Converter({tables: true, tasklists: true, emoji: true, underline: true});
+
+if (window.parent.location.hash.split('=')[0] !== '#edit')
+  dev.remove();
+
+src.oninput = ev => {
+  render.innerHTML = converter.makeHtml(src.innerText);
+};
+</script></body>

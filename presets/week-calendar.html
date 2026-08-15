@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week Calendar</title>
+    <style>
+        html, body { height: 100%; margin: 0; padding: 0; font-family: sans-serif; }
+        table { width: 100%; height: 100%; border-collapse: collapse; table-layout: fixed; }
+        th, td { border: 1px solid #ccc; vertical-align: top; }
+        th { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+        .label { transform: translateY(-10px); display: inline-block; }
+        th:first-child, td:first-child { width: 50px; min-width: 50px; max-width: 50px; }
+    </style>
+</head>
+<body>
+    <div id="calendar"></div>
+    <script>
+        const isFramed = !!window.frameElement;
+        let startTime = isFramed ? 7 : parseInt(prompt("Enter start hour (0-23):", "7"));
+        let endTime = isFramed ? 22 :parseInt(prompt("Enter end hour (0-23):", "22"));
+        startTime = Math.max(0, Math.min(23, startTime));
+        endTime = Math.max(startTime + 1, Math.min(24, endTime));
+
+        const locale = navigator.language || 'en-US';
+        const days = Array.from({ length: 7 }, (_, i) =>
+            new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(new Date(1970, 0, i + 5))
+        );
+
+        const calendar = document.getElementById("calendar");
+        const hours = Array.from({ length: endTime - startTime }, (_, i) => startTime + i);
+
+        let tableContent = `<table border="1" width="100%" height="100%">
+            <thead>
+                <tr><th></th>${days.map(day => `<th>${day}</th>`).join('')}</tr>
+            </thead>
+            <tbody>
+                ${hours.map(hour => `
+                    <tr>
+                        <td><span class="label">${hour % 12 || 12} ${hour >= 12 ? 'pm' : 'am'}</span></td>
+                        ${days.map(() => `<td></td>`).join('')}
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>`;
+
+        calendar.outerHTML = tableContent;
+    </script>
+</body>
+</html>

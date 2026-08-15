@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>title</title>
+  <style type="text/css">
+* {
+font-family: monospace;
+font-size: 12pt;
+color: limegreen;
+}
+
+body {
+background-color: black;
+}
+
+p {
+white-space: pre
+}
+
+input {
+background: black;
+border: 0;
+width: 95%;
+}
+  </style>
+  </head>
+  <body>
+  Welcome to the terminal!
+<p id="input">&gt;<input placeholder="Type a Linux command" id="cmd" /></p>
+  </body>
+<script>
+const cmd = document.getElementById("cmd");
+const input = document.getElementById("input");
+const help = "Available commands: help, man, sudo, ls, cd, echo, ping, cat";
+print(help);
+
+function print(msg) {
+const p = document.createElement('p');
+p.innerText = msg;
+document.body.insertBefore(p, input)
+}
+
+cmd.onchange = ev => {
+print("> " + ev.target.value);
+const parsed = ev.target.value.split(' ');
+switch (parsed[0]) {
+  case 'help':
+    print(help);
+    break;
+  case 'man':
+    print(help);
+    break;
+  case 'ls':
+    print("bin\nboot\ndev\netc\nhome\nlib\nmedia\nmnt\nopt\nsbin\srv\ntmp\nusr\nproc");
+    break;
+  case 'sudo':
+    print("Enter sudo password:");
+    break;
+  case 'cd':
+    print("Opening " + parsed[1]);
+    break;
+  case 'echo':
+    print(parsed[1]);
+    break;
+  case 'cat':
+    print("Meow (jk I know what this command is supposed to do)");
+    break;
+  case 'ping':
+    print("Pinging " + parsed[1] + " [142.250.190.14] with 32 bytes of data:");
+    const interval = setInterval(() => print("Reply from 142.250.190.14: bytes=32 time=6ms TTL=51"), 1000);
+    setTimeout(() => { print("Ping statistics for 142.250.190.14:\n    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),\nApproximate round trip times in milli-seconds:\n    Minimum = 6ms, Maximum = 7ms, Average = 6ms"); clearInterval(interval); }, 4010);
+    break;
+  default:
+    print("unknown command");
+}
+ev.target.value = "";
+};
+</script>
+</html>

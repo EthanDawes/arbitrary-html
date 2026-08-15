@@ -1,0 +1,14 @@
+<head><title>README</title></head>
+<body contenteditable=true></body>
+<script>
+const body = document.body;
+
+/* Hope this doesn't allow XSS */
+body.innerHTML = decodeURIComponent(location.search).substring(1) || "Take Notes...";
+
+body.oninput = ev => {
+const url = new URL(location.href);
+url.search = encodeURIComponent(body.innerHTML);
+window.history.replaceState({}, "README", url);
+}
+</script>
