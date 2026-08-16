@@ -56,29 +56,29 @@ Render text with an animated wavy effect
 ### Terminal
 Write a message on the terminal, complete with a few working commands!
 
-[![](.github/demos/terminal.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=10)
+[![](.github/demos/terminal.png)](https://ethandawes.github.io/arbitrary-html/presets.html)
 
 ### Month Calendar
 Create & print full-page calendars
 
-[![](.github/demos/calendar.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=11)
+[![](.github/demos/calendar.png)](https://ethandawes.github.io/arbitrary-html/presets.html)
 
 ### Schedule
 Create & print full-page schedules
 
-[![](.github/demos/schedule.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=12)
+[![](.github/demos/schedule.png)](https://ethandawes.github.io/arbitrary-html/presets.html)
 
 ### Week Calendar
 Create & print full-page calendars
 
-[![](.github/demos/week-cal.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=13)
+[![](.github/demos/week-cal.png)](https://ethandawes.github.io/arbitrary-html/presets.html)
 
 ### Chart.js
 Prototype and quickly view interactive chart.js configurations
 
-[![](.github/demos/chartjs.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=14)
+[![](.github/demos/chartjs.png)](https://ethandawes.github.io/arbitrary-html/presets.html)
 
 ### Flashcards
 Create custom printable double-sided flashcards
 
-[![](.github/demos/flashcards.png)](https://ethandawes.github.io/arbitrary-html/presets.html?redir=15)
+[![](.github/demos/flashcards.png)](https://ethandawes.github.io/arbitrary-html/presets.html)

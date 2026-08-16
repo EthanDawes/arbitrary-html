@@ -53,13 +53,8 @@ let dir = location.pathname;
 dir = dir.substring(0, dir.lastIndexOf('/'));
 const basePath = "./";
 
-// Convienence for README so I don't retype all the URLs
-const redir = new URLSearchParams(location.search).get("redir");
-if (redir)
-   location.assign(basePath + templates[redir]);
-else {
-  for (let template of templates) {
-    main.innerHTML += `<a href="${basePath + template}"><iframe src="${basePath + template.replace(/^#editurl=/, '')}" disabled></iframe></a>`;
-  }
+// Removed ?redir=<num> because it't not worth fixing README whenever I add/remove/rearrange URL. People are smart enough to find the template they need.
+for (let template of templates) {
+  main.innerHTML += `<a href="${basePath + template}"><iframe src="${basePath + template.replace(/^#editurl=/, '')}" disabled></iframe></a>`;
 }
 </script>
