@@ -7,6 +7,10 @@
 Arbitrary-HTML allows you to embed custom HTML code without a server. The code is stored in the URL and rendered with a service worker.
 No coding experience is required, as the preview is editable by default. I used this to make my [Canvas](https://www.instructure.com/canvas) posts more interesting.
 
+## Running locally
+1. **Preferred** `python -m http.server` in project directory
+2. Open `index.html` in browser (might have minor bugs)
+
 ## Templates
 ### Boilerplate
 Basic `html`, `head` and `body` tags, with a script that runs on DOM ready
