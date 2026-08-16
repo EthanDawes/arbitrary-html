@@ -86,3 +86,6 @@ Prototype and quickly view interactive chart.js configurations
 Create custom printable double-sided flashcards
 
 [![](.github/demos/flashcards.png)](https://ethandawes.github.io/arbitrary-html/presets.html)
+
+### Semester at a glance
+Printable semester calendar. Click on dates to toggle grey.

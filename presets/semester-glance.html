@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Semester at a Glance</title>
+        <style>
+            @page {
+                size: 17in 11in;
+                margin: 0.28in;
+            }
+            :root {
+                --border: #222;
+                --week: #fafafa;
+                --clicked: #bfbfbf;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                background: white;
+                font-family: Arial, Helvetica, sans-serif;
+                color: #111;
+                height: 100vh;
+            }
+            main {
+                width: 100%;
+                height: 100%;
+            }
+            table {
+                width: 100%;
+                height: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+                font-size: 15pt;
+                line-height: 1.1;
+            }
+            col.week {
+                width: 4.2%;
+            }
+            col.day {
+                width: 13.6857%;
+            }
+            thead th {
+                border: 0;
+                padding: 0 0 0.12in;
+                font-size: 18pt;
+                font-weight: 700;
+                text-align: center;
+            }
+            tbody th,
+            tbody td {
+                border: 1px solid var(--border);
+                vertical-align: top;
+                padding: 0.07in 0.075in;
+                text-align: left;
+            }
+            tbody th {
+                text-align: center;
+                font-weight: 400;
+                background: var(--week);
+            }
+            tbody td {
+                cursor: pointer;
+                user-select: none;
+                transition: background-color 80ms linear;
+            }
+            tbody td.clicked {
+                background: var(--clicked) !important;
+            }
+            .month {
+                font-weight: 700;
+            }
+            @media screen {
+                body {
+                    padding: 24px;
+                }
+                main {
+                    max-width: 16.44in;
+                    margin: 0 auto;
+                }
+                table {
+                    font-size: 16px;
+                }
+                thead th {
+                    font-size: 19px;
+                }
+            }
+            @media print {
+                body {
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                tbody td {
+                    cursor: default;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <table id="calendar" aria-label="Semester at a glance">
+                <colgroup>
+                    <col class="week" />
+                    <col class="day" />
+                    <col class="day" />
+                    <col class="day" />
+                    <col class="day" />
+                    <col class="day" />
+                    <col class="day" />
+                    <col class="day" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th scope="col">Week</th>
+                        <th scope="col">Monday</th>
+                        <th scope="col">Tuesday</th>
+                        <th scope="col">Wednesday</th>
+                        <th scope="col">Thursday</th>
+                        <th scope="col">Friday</th>
+                        <th scope="col">Saturday</th>
+                        <th scope="col">Sunday</th>
+                    </tr>
+                </thead>
+                <tbody id="calendar-body"></tbody>
+            </table>
+        </main>
+        <script>
+            (() => {
+                const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+                const dayMs = 86400000;
+                const body = document.querySelector("#calendar-body");
+
+                const parseIso = (value) => {
+                    if (!isoDatePattern.test(value)) return null;
+                    const [year, month, day] = value.split("-").map(Number);
+                    const date = new Date(Date.UTC(year, month - 1, day));
+                    return Number.isNaN(date.getTime()) ||
+                        date.getUTCFullYear() !== year ||
+                        date.getUTCMonth() !== month - 1 ||
+                        date.getUTCDate() !== day
+                        ? null
+                        : date;
+                };
+
+                const ask = (message, fallback, validator) => {
+                    const isFramed = !!window.frameElement;
+                    const value = isFramed ? fallback : prompt(message, fallback)?.trim();
+                    if (value === null || !validator(value)) return null;
+                    return value;
+                };
+
+                const startValue = ask(
+                    "Start date (ISO, YYYY-MM-DD):",
+                    "2026-08-24",
+                    (value) => parseIso(value) !== null,
+                );
+
+                if (!startValue) return;
+
+                const durationValue = ask(
+                    "Duration (number of weeks):",
+                    "17",
+                    (value) =>
+                        Number.isInteger(Number(value)) && Number(value) > 0,
+                );
+
+                if (!durationValue) return;
+
+                const start = parseIso(startValue);
+                const duration = Number(durationValue);
+
+                // Always anchor the grid on Monday, even if the entered start date is not Monday.
+                const monday = new Date(start.getTime());
+                const weekday = monday.getUTCDay(); // Sunday = 0, Monday = 1
+                const daysSinceMonday = (weekday + 6) % 7;
+                monday.setUTCDate(monday.getUTCDate() - daysSinceMonday);
+
+                const formatDay = (date) => {
+                    const month = date.toLocaleDateString("en-US", {
+                        month: "short",
+                        timeZone: "UTC",
+                    });
+                    const day = date.getUTCDate();
+                    const isFirstOfMonth = day === 1;
+                    return isFirstOfMonth ? `${month}-${day}` : String(day);
+                };
+
+                body.innerHTML = Array.from(
+                    { length: duration },
+                    (_, weekIndex) => {
+                        const weekStart = new Date(
+                            monday.getTime() + weekIndex * 7 * dayMs,
+                        );
+                        const cells = Array.from(
+                            { length: 7 },
+                            (_, dayIndex) => {
+                                const date = new Date(
+                                    weekStart.getTime() + dayIndex * dayMs,
+                                );
+                                const iso = date.toISOString().slice(0, 10);
+                                const monthStart = date.getUTCDate() === 1;
+                                const label = formatDay(date);
+                                const monthClass = monthStart
+                                    ? " month-start"
+                                    : "";
+                                const content = monthStart
+                                    ? `<span class="month">${label}</span>`
+                                    : label;
+                                return `<td class="day-cell${monthClass}" data-date="${iso}" role="button" tabindex="0" aria-pressed="false">${content}</td>`;
+                            },
+                        ).join("");
+                        return `<tr><th scope="row">${weekIndex + 1}</th>${cells}</tr>`;
+                    },
+                ).join("");
+
+                const toggleDay = (cell) => {
+                    cell.classList.toggle("clicked");
+                    cell.setAttribute(
+                        "aria-pressed",
+                        cell.classList.contains("clicked"),
+                    );
+                };
+
+                body.addEventListener("click", (event) => {
+                    const cell = event.target.closest(".day-cell");
+                    if (cell) toggleDay(cell);
+                });
+
+                body.addEventListener("keydown", (event) => {
+                    if (
+                        (event.key === "Enter" || event.key === " ") &&
+                        event.target.matches(".day-cell")
+                    ) {
+                        event.preventDefault();
+                        toggleDay(event.target);
+                    }
+                });
+            })();
+        </script>
+    </body>
+</html>
