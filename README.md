@@ -88,4 +88,9 @@ Create custom printable double-sided flashcards
 [![](.github/demos/flashcards.png)](https://ethandawes.github.io/arbitrary-html/presets.html)
 
 ### Semester at a glance
-Printable semester calendar. Click on dates to toggle grey.
+Printable semester calendar. Click on dates to toggle grey. Reccomended for 11x17 inch paper.
+
+### To-dos
+Printable task list. Week of semester on x axis, tasks due on each day on the y axis.
+
+[![](.github/demos/todos.png)](https://ethandawes.github.io/arbitrary-html/presets/todos.html)
