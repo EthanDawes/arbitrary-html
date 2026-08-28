@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule Grid</title>
+  <style>
+    @page {
+      size: landscape;
+      margin: 4mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 28px repeat(35, 1fr);
+      grid-template-rows: 20px 1.5in repeat(16, 1fr);
+      width: 100vw;
+      height: 100vh;
+      border: 1px solid #000;
+    }
+
+    /* Top Day Header Bar */
+    .day-header-corner {
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+
+    .day-label {
+      grid-column: span 5;
+      display: flex;
+      align-items: center;
+      padding-left: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+      background: #e0e0e0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .day-label:last-of-type {
+      border-right: none;
+    }
+
+    /* Tall Header Slots */
+    .slot-corner {
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+
+    .header-slot {
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+
+    .header-slot:nth-child(44), .day-label:nth-child(8) {
+      border-right: none;
+    }
+
+    /* Alternating shaded day blocks */
+    .shaded {
+      background-color: #e0e0e0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Left Number Column */
+    .row-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
+    }
+
+    .row-num:last-of-type {
+      border-bottom: none;
+    }
+
+    /* Dot Grid Area */
+    .grid-body {
+      grid-column: 2 / span 35;
+      grid-row: 3 / span 16;
+      display: grid;
+      grid-template-columns: repeat(35, 1fr);
+      grid-template-rows: repeat(16, 1fr);
+      position: relative;
+    }
+
+    .dot-cell {
+      position: relative;
+    }
+
+    /* Single small black dot at each cell intersection */
+    .dot-cell::after {
+      content: '';
+      position: absolute;
+      right: -1.5px;
+      bottom: -1.5px;
+      width: 2px;
+      height: 2px;
+      background-color: #000;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    /* Hide dots along outer perimeter boundaries */
+    .dot-cell:nth-child(35n)::after {
+      display: none;
+    }
+
+    .dot-cell:nth-child(n+526)::after {
+      display: none;
+    }
+
+    @media print {
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .container {
+        width: 100vw;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Row 1: Day Letters -->
+    <div class="day-header-corner"></div>
+    <div class="day-label">M</div>
+    <div class="day-label">T</div>
+    <div class="day-label">W</div>
+    <div class="day-label">R</div>
+    <div class="day-label">F</div>
+    <div class="day-label">S</div>
+    <div class="day-label">J</div>
+
+    <!-- Row 2: Tall Vertical Header Blocks -->
+    <div class="slot-corner"></div>
+    <!-- M (Shaded) -->
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <!-- T (White) -->
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <!-- W (Shaded) -->
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <!-- R (White) -->
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <!-- F (Shaded) -->
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <!-- S (White) -->
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <div class="header-slot"></div>
+    <!-- J (Shaded) -->
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+    <div class="header-slot shaded"></div>
+
+    <!-- Rows 1-16 Left Number Indicators -->
+    <div class="row-num">1</div>
+    <div class="row-num">2</div>
+    <div class="row-num">3</div>
+    <div class="row-num">4</div>
+    <div class="row-num">5</div>
+    <div class="row-num">6</div>
+    <div class="row-num">7</div>
+    <div class="row-num">8</div>
+    <div class="row-num">9</div>
+    <div class="row-num">10</div>
+    <div class="row-num">11</div>
+    <div class="row-num">12</div>
+    <div class="row-num">13</div>
+    <div class="row-num">14</div>
+    <div class="row-num">15</div>
+    <div class="row-num">16</div>
+
+    <!-- Main Body Dot Grid Area (35 x 16 = 560 Cells) -->
+    <div class="grid-body" id="gridBody"></div>
+  </div>
+
+  <script>
+    // Generate the 35 columns x 16 rows of dot-grid cells
+    const gridBody = document.getElementById('gridBody');
+    const totalCells = 35 * 16;
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < totalCells; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'dot-cell';
+      fragment.appendChild(cell);
+    }
+    gridBody.appendChild(fragment);
+  </script>
+</body>
+</html>
